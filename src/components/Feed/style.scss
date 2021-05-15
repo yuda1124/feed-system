@@ -1,0 +1,40 @@
+@use '../../styles/design-system.scss' as *;
+.wrap_feed {
+  padding: $space-medium;
+  border: 2px solid $border-color;
+  border-radius: 10px;
+  margin-bottom: $space-medium;
+  .header_feed {
+    display: flex;
+    border-bottom: 2px solid $border-color;
+    padding: $space-small 0;
+    color: $light-gray;
+    .category_name {
+      flex: 1;
+    }
+  }
+  .main_feed {
+    .info_feed {
+      padding: $space-small 0;
+      .user_id {
+        color: $green;
+        padding-right: $space-small;
+        margin-right: $space-small;
+        border-right: 2px solid $border-color;
+      }
+    }
+    .content_feed {
+      title {
+        @include ellipsis();
+        font-weight: $bold;
+        display: block;
+        margin-bottom: $space-medium;
+        font-size: $font-large;
+      }
+      p {
+        @include ellipsis($line: 4);
+        font-size: $font-medium;
+      }
+    }
+  }
+}
