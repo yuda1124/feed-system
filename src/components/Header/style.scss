@@ -1,0 +1,13 @@
+@use '../../styles/design-system.scss' as *;
+
+header {
+  text-align: center;
+  height: $header-height;
+  box-shadow: $shadow;
+  width: 100%;
+  margin-bottom: $space-large;
+  span {
+    font-size: $font-x-large;
+    line-height: $header-height;
+  }
+}
