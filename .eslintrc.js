@@ -20,7 +20,7 @@ module.exports = {
       'error',
       {
         selector: 'variable',
-        format: ['camelCase', 'UPPER_CASE', 'PascalCase'], // 변수명에 적용할 rule
+        format: ['camelCase', 'UPPER_CASE', 'PascalCase', 'snake_case'], // 변수명에 적용할 rule
         leadingUnderscore: 'allow', // underscore(_) 로 시작하는 변수명 허용
       },
     ],
