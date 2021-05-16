@@ -1,5 +1,6 @@
 import React from 'react';
 import { FeedSummary, Category } from '../../types';
+import { formatDate } from '../../utils';
 import './style.scss';
 
 type FeedProps = {
@@ -19,7 +20,7 @@ const Feed = ({ feed, categories }: FeedProps) => {
       <div className="main_feed">
         <div className="info_feed">
           <span className="user_id">{user_id}</span>
-          <span>{created_at}</span>
+          <span>{formatDate(created_at)}</span>
         </div>
         <div className="content_feed">
           <title>{title}</title>
