@@ -1,0 +1,33 @@
+@use '../../styles/design-system.scss' as *;
+.wrap_advertisement {
+  padding: $space-medium;
+  border: 2px solid $border-color;
+  border-radius: 10px;
+  margin-bottom: $space-medium;
+  .header_feed {
+    padding: $space-small 0;
+    color: $light-gray;
+  }
+  .main_feed {
+    display: flex;
+    .img_adv {
+      width: 100%;
+      max-width: 150px;
+      height: auto;
+      margin-right: $space-medium;
+    }
+    .content_feed {
+      flex: 1;
+      title {
+        @include ellipsis($line: 2);
+        font-weight: $bold;
+        margin-bottom: $space-medium;
+        font-size: $font-large;
+      }
+      p {
+        @include ellipsis($line: 4);
+        font-size: $font-medium;
+      }
+    }
+  }
+}
