@@ -1,27 +1,43 @@
-import React, { useRef, useEffect } from 'react';
-import { FeedSummary, Category } from '../../types';
-import { Feed } from '..';
+import React, { useRef, useEffect, ReactNode, useState } from 'react';
+import { FeedSummary, Category, Advertisement } from '../../types';
+import { Feed, AdvertisementFeed } from '..';
 import './style.scss';
 
 type FeedListProps = {
   feedSummaries: FeedSummary[];
+  advertisements: Advertisement[];
   categories: Category[];
   fetchMore: () => Promise<void>;
   lastPage: number;
   page: number;
 };
 
-const FeedList = ({ feedSummaries, categories, fetchMore, lastPage, page }: FeedListProps) => {
-  const renderFeeds = () => feedSummaries.map(feed => <Feed {...{ feed, categories }} key={feed.id} />);
+const FeedList = ({ feedSummaries, categories, fetchMore, lastPage, page, advertisements }: FeedListProps) => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const renderFeeds = () => {
+    const feeds: ReactNode[] = [];
+    let advIdx = 0;
+    feedSummaries.forEach((feed, idx) => {
+      if (idx > 0 && idx % 3 === 0 && advIdx < advertisements.length) {
+        const advertisement = advertisements[advIdx];
+        const { id } = advertisement;
+        feeds.push(<AdvertisementFeed advertisement={advertisement} key={`adv_${id}`} />);
+        advIdx += 1;
+      }
+      feeds.push(<Feed {...{ feed, categories }} key={`feed_${feed.id}`} />);
+    });
+    return feeds;
+  };
   const target = useRef<HTMLDivElement>(null);
   const wrapper = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const onIntersect = async ([entry]: IntersectionObserverEntry[], observer: IntersectionObserver) => {
       if (entry.isIntersecting) {
-        observer.unobserve(entry.target);
         if (page < lastPage) {
+          observer.unobserve(entry.target);
+          setLoading(true);
           await fetchMore();
-          observer.observe(entry.target);
+          setLoading(false);
         }
       }
     };
@@ -37,8 +53,11 @@ const FeedList = ({ feedSummaries, categories, fetchMore, lastPage, page }: Feed
   }, [page]);
   return (
     <div className="wrap-feed-list" ref={wrapper}>
-      <div className="contents">{renderFeeds()}</div>
-      <div ref={target} className="loading" />
+      <div className="contents">
+        {renderFeeds()}
+        <div ref={target} className="dummy" />
+        {loading && <p className="loading">···</p>}
+      </div>
     </div>
   );
 };
