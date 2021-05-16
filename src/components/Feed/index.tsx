@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { FeedSummary, Category } from '../../types';
 import { formatDate } from '../../utils';
 import './style.scss';
@@ -7,8 +7,9 @@ type FeedProps = {
   feed: FeedSummary;
   categories: Category[];
 };
+const areEqual = (prevProps: FeedProps, nextProps: FeedProps) => prevProps.feed.id === nextProps.feed.id;
 
-const Feed = ({ feed, categories }: FeedProps) => {
+const Feed = memo(({ feed, categories }: FeedProps) => {
   const { category_id, id, contents, title, created_at, user_id } = feed;
   const category = categories.find(c => c.id === category_id);
   return (
@@ -29,6 +30,6 @@ const Feed = ({ feed, categories }: FeedProps) => {
       </div>
     </div>
   );
-};
+}, areEqual);
 
 export { Feed };
