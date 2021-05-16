@@ -1,0 +1,10 @@
+.wrap-feed-list {
+  flex: 1;
+  overflow-y: auto;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  .contents {
+    max-width: 1170px;
+  }
+}
