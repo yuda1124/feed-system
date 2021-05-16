@@ -10,6 +10,7 @@ type FeedState = {
   feedSummaries: FeedSummary[];
   advertisements: Advertisement[];
   categories: Category[];
+  lastPage: number;
 };
 
 const DEFAULT_LIMIT = 10;
@@ -22,6 +23,7 @@ const initialState = {
   feedSummaries: [],
   advertisements: [],
   categories: [],
+  lastPage: -1,
 };
 
 const initialFetch = async () => {
@@ -32,9 +34,9 @@ const initialFetch = async () => {
     await API.getFeedList({ page, limit, ord: order, category: filter }),
     await API.getAdvertisementList({ page, limit: Math.floor(limit / 3) }),
   ]);
-  const { data: feeds } = feedsResponse;
+  const { data: feeds, last_page: lastPage } = feedsResponse;
   const { data: ads } = adsResponse;
-  return { categories, filter, feeds, ads };
+  return { categories, filter, feeds, ads, lastPage };
 };
 
 const useFeedList = () => {
@@ -42,8 +44,15 @@ const useFeedList = () => {
 
   useEffect(() => {
     const init = async () => {
-      const { categories, filter, feeds, ads } = await initialFetch();
-      setFeedState(state => ({ ...state, categories, filter, feedSummaries: feeds, advertisements: ads }));
+      const { categories, filter, feeds, ads, lastPage } = await initialFetch();
+      setFeedState(state => ({
+        ...state,
+        categories,
+        filter,
+        lastPage,
+        feedSummaries: feeds,
+        advertisements: ads,
+      }));
     };
     init();
   }, []);
@@ -56,16 +65,26 @@ const useFeedList = () => {
   }) => {
     const [feedsResponse, adsResponse] = await Promise.all([
       await API.getFeedList({ page, limit, ord: order, category: filter }),
-      await API.getAdvertisementList({ page: 1, limit: Math.floor(limit / 3) }),
+      await API.getAdvertisementList({ page, limit: Math.floor(limit / 3) }),
     ]);
-    const { data: feeds } = feedsResponse;
+    const { data: feeds, last_page: lastPage } = feedsResponse;
     const { data: ads } = adsResponse;
-    return { feeds, ads };
+    return { feeds, ads, lastPage };
   };
 
   const changeFilter = async (filter: number[]) => {
-    const { feeds, ads } = await fetchAll({ page: 1, filter });
-    setFeedState({ ...feedState, filter, page: 1, feedSummaries: feeds, advertisements: ads });
+    const { feeds, ads, lastPage } = await fetchAll({
+      filter,
+      page: 1,
+    });
+    setFeedState({
+      ...feedState,
+      lastPage,
+      filter,
+      page: 1,
+      feedSummaries: feeds,
+      advertisements: ads,
+    });
   };
 
   const fetchMore = async () => {
