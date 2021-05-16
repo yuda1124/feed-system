@@ -20,6 +20,7 @@ export type FeedSummary = {
 
 export type Advertisement = {
   contents: string;
+  title: string;
   created_at: string;
   id: number;
   img: string;
