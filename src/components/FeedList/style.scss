@@ -1,10 +1,14 @@
+@use '../../styles/design-system.scss' as *;
+
 .wrap-feed-list {
   flex: 1;
   overflow-y: auto;
   align-items: center;
   display: flex;
   flex-direction: column;
+  width: 100%;
   .contents {
     max-width: 1170px;
+    width: 100%;
   }
 }
