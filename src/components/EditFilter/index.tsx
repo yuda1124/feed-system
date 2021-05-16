@@ -42,13 +42,14 @@ const EditFilter = ({ categories, filter, changeFilter, closePopup }: EditFilter
         </li>
       );
     });
+  const disabled = selectedCategory.length === 0;
   return (
     <>
       <div className="wrap_edit_filter">
         <h4>필터</h4>
         <ul>{renderCategories()}</ul>
         <div>
-          <button type="button" onClick={() => onSubmit()}>
+          <button type="button" onClick={() => onSubmit()} className={disabled ? 'disabled' : ''} disabled={disabled}>
             저장하기
           </button>
         </div>

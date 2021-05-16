@@ -22,6 +22,10 @@
       padding: $space-small $space-large;
       background-color: $green;
       color: #fff;
+      &.disabled {
+        background-color: $light-gray;
+        color: $gray;
+      }
     }
   }
 }
