@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { FeedSummary, Category } from '../../types';
 import { Feed } from '..';
 import './style.scss';
@@ -6,13 +6,29 @@ import './style.scss';
 type FeedListProps = {
   feedSummaries: FeedSummary[];
   categories: Category[];
+  fetchMore: () => Promise<void>;
 };
 
-const FeedList = ({ feedSummaries, categories }: FeedListProps) => {
+const FeedList = ({ feedSummaries, categories, fetchMore }: FeedListProps) => {
   const renderFeeds = () => feedSummaries.map(feed => <Feed {...{ feed, categories }} key={feed.id} />);
+  const target = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const onIntersect = async ([entry]: IntersectionObserverEntry[], observer: IntersectionObserver) => {
+      if (entry.isIntersecting) {
+        observer.unobserve(entry.target);
+        await fetchMore();
+        observer.observe(entry.target);
+      }
+    };
+    if (!target.current || feedSummaries.length === 0) return undefined;
+    const observer = new IntersectionObserver(onIntersect, { threshold: 0.5 });
+    observer.observe(target.current);
+    return () => observer.disconnect();
+  }, [feedSummaries, fetchMore]);
   return (
     <div className="wrap-feed-list">
       <div className="contents">{renderFeeds()}</div>
+      <div ref={target} className="loading" />
     </div>
   );
 };
