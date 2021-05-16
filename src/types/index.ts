@@ -11,19 +11,19 @@ export type Category = {
 export type FeedSummary = {
   category_id: number;
   contents: string;
-  created_at: Date;
+  created_at: string;
   id: number;
   title: string;
-  updated_at: Date;
+  updated_at: string;
   user_id: number;
 };
 
 export type Advertisement = {
   contents: string;
-  created_at: Date;
+  created_at: string;
   id: number;
   img: string;
-  updated_at: Date;
+  updated_at: string;
 };
 
 export type FeedListParams = {
