@@ -32,7 +32,7 @@
         font-size: $font-large;
       }
       p {
-        @include ellipsis($line: 4);
+        @include ellipsis($line: 1);
         font-size: $font-medium;
       }
     }
