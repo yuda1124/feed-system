@@ -48,35 +48,43 @@ const useFeedList = () => {
     init();
   }, []);
 
-  const changeFilter = async (filter: number[]) => {
-    const { limit, order } = feedState;
+  const fetchAll = async ({
+    page = feedState.page,
+    limit = feedState.limit,
+    order = feedState.order,
+    filter = feedState.filter,
+  }) => {
     const [feedsResponse, adsResponse] = await Promise.all([
-      await API.getFeedList({ page: 1, limit, ord: order, category: filter }),
+      await API.getFeedList({ page, limit, ord: order, category: filter }),
       await API.getAdvertisementList({ page: 1, limit: Math.floor(limit / 3) }),
     ]);
     const { data: feeds } = feedsResponse;
     const { data: ads } = adsResponse;
+    return { feeds, ads };
+  };
+
+  const changeFilter = async (filter: number[]) => {
+    const { feeds, ads } = await fetchAll({ page: 1, filter });
     setFeedState({ ...feedState, filter, page: 1, feedSummaries: feeds, advertisements: ads });
   };
 
   const fetchMore = async () => {
-    const { limit, order, filter, page, feedSummaries, advertisements } = feedState;
-    const [feedsResponse, adsResponse] = await Promise.all([
-      await API.getFeedList({ page: page + 1, limit, ord: order, category: filter }),
-      await API.getAdvertisementList({ page: page + 1, limit: Math.floor(limit / 3) }),
-    ]);
-    const { data: feeds } = feedsResponse;
-    const { data: ads } = adsResponse;
+    const { page, feedSummaries, advertisements } = feedState;
+    const { feeds, ads } = await fetchAll({ page: page + 1 });
     setFeedState({
       ...feedState,
-      filter,
-      page: 1,
+      page: page + 1,
       feedSummaries: [...feedSummaries, ...feeds],
       advertisements: [...advertisements, ...ads],
     });
   };
 
-  return { feedState, changeFilter, fetchMore };
+  const changeOrder = async (order: ORDER) => {
+    const { feeds, ads } = await fetchAll({ page: 1, order });
+    setFeedState({ ...feedState, order, page: 1, feedSummaries: feeds, advertisements: ads });
+  };
+
+  return { feedState, changeFilter, fetchMore, changeOrder };
 };
 
 export { useFeedList };
