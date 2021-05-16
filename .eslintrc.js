@@ -36,6 +36,7 @@ module.exports = {
     'react/no-danger': 'off', // dangerouslySetInnerHTML 허용
     'react/no-array-index-key': 'warn', // key로 index 사용시 경고
     'import/order': 'off', // import 순서 확인 안함
+    'import/no-cycle': 'off',
     'no-unneeded-ternary': 'warn', // 불필요한 삼항연산자 경고
     'no-empty': 'off', // 빈 객체 허용
     'no-nested-ternary': 'off', // 중첩 삼항연산자 허용
