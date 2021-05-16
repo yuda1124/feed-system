@@ -1,0 +1,35 @@
+@use '../../styles/design-system.scss' as *;
+
+.wrap_edit_filter {
+  @include absolute-center;
+  width: 350px;
+  background-color: #fff;
+  z-index: 1000;
+  padding: $space-x-large;
+
+  ul {
+    margin: $space-medium 0;
+    li {
+      margin-top: 2px;
+      input {
+        margin-right: $space-small;
+      }
+    }
+  }
+  div {
+    text-align: right;
+    button {
+      padding: $space-small $space-large;
+      background-color: $green;
+      color: #fff;
+    }
+  }
+}
+.dimmed {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+}
