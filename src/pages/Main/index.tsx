@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useFeedList } from '../../hooks';
-import { FeedList, EditFilter } from '../../components';
+import { FeedList, EditFilter, InfinityScroll } from '../../components';
 import { ORDER } from '../../types';
 import './style.scss';
 
@@ -41,7 +41,11 @@ const Main = () => {
           필터
         </button>
       </div>
-      <FeedList {...{ feedSummaries, categories, fetchMore, lastPage, page, advertisements }} />
+      {feedSummaries.length > 0 && (
+        <InfinityScroll {...{ fetchMore, lastPage, page }}>
+          <FeedList {...{ feedSummaries, categories, advertisements }} />
+        </InfinityScroll>
+      )}
     </div>
   );
 };

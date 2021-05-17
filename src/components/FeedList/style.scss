@@ -1,29 +1,6 @@
 @use '../../styles/design-system.scss' as *;
 
 .wrap-feed-list {
-  flex: 1;
-  overflow-y: auto;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
+  max-width: 1170px;
   width: 100%;
-  .contents {
-    position: relative;
-    max-width: 1170px;
-    width: 100%;
-    .dummy {
-      position: absolute;
-      height: 10px;
-      width: 100%;
-      bottom: 0;
-    }
-    .link_feed {
-      display: block;
-    }
-  }
-  .loading {
-    font-size: 100px;
-    text-align: center;
-    padding: $space-large;
-  }
 }

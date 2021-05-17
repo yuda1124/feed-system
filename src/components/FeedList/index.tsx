@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, ReactNode, useState } from 'react';
+import React, { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { FeedSummary, Category, Advertisement } from '../../types';
 import { Feed, AdvertisementFeed } from '..';
@@ -8,13 +8,9 @@ type FeedListProps = {
   feedSummaries: FeedSummary[];
   advertisements: Advertisement[];
   categories: Category[];
-  fetchMore: () => Promise<void>;
-  lastPage: number;
-  page: number;
 };
 
-const FeedList = ({ feedSummaries, categories, fetchMore, lastPage, page, advertisements }: FeedListProps) => {
-  const [loading, setLoading] = useState<boolean>(false);
+const FeedList = ({ feedSummaries, categories, advertisements }: FeedListProps) => {
   const renderFeeds = () => {
     const feeds: ReactNode[] = [];
     let advIdx = 0;
@@ -33,38 +29,8 @@ const FeedList = ({ feedSummaries, categories, fetchMore, lastPage, page, advert
     });
     return feeds;
   };
-  const target = useRef<HTMLDivElement>(null);
-  const wrapper = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const onIntersect = async ([entry]: IntersectionObserverEntry[], observer: IntersectionObserver) => {
-      if (entry.isIntersecting) {
-        if (page < lastPage) {
-          observer.unobserve(entry.target);
-          setLoading(true);
-          await fetchMore();
-          setLoading(false);
-        }
-      }
-    };
-    if (!target.current || feedSummaries.length === 0) return undefined;
-    const observer = new IntersectionObserver(onIntersect, { threshold: 0.5 });
-    observer.observe(target.current);
-    return () => observer.disconnect();
-  }, [feedSummaries, fetchMore, page, lastPage]);
-  useEffect(() => {
-    if (page === 1 && wrapper.current) {
-      wrapper.current.scrollTo(0, 0);
-    }
-  }, [page]);
-  return (
-    <div className="wrap-feed-list" ref={wrapper}>
-      <div className="contents">
-        {renderFeeds()}
-        <div ref={target} className="dummy" />
-        {loading && <p className="loading">···</p>}
-      </div>
-    </div>
-  );
+
+  return <div className="wrap-feed-list">{renderFeeds()}</div>;
 };
 
 export { FeedList };
