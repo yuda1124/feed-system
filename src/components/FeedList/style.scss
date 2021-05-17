@@ -3,4 +3,7 @@
 .wrap-feed-list {
   max-width: 1170px;
   width: 100%;
+  @include smaller-than($tablet-mobile-width) {
+    background-color: #e6e8eb;
+  }
 }

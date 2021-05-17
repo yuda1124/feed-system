@@ -1,9 +1,15 @@
 @use '../../styles/design-system.scss' as *;
+$content-color: #7e848a;
 .wrap_feed {
   padding: $space-medium;
   border: 2px solid $border-color;
   border-radius: 10px;
-  margin-bottom: $space-medium;
+  margin-bottom: $space-small;
+  background-color: $white;
+  @include smaller-than($tablet-mobile-width) {
+    border-radius: 0;
+    border-width: 2px 0;
+  }
   .header_feed {
     display: flex;
     border-bottom: 2px solid $border-color;
@@ -55,6 +61,7 @@
     p {
       @include ellipsis();
       font-size: $font-medium;
+      color: $content-color;
     }
   }
   &.detail {
