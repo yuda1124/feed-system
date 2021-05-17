@@ -12,9 +12,12 @@ type ParamTypes = {
 const Detail = () => {
   const { id } = useParams<ParamTypes>();
   const { feedDetail, replies } = useDetail(parseInt(id, 10));
+  if (!feedDetail) return <div className="wrap_detail" />;
   return (
     <div className="wrap_detail">
-      <div className="contents">{feedDetail && <Feed {...{ feed: feedDetail, feedType: FEED_TYPE.DETAIL }} />}</div>
+      <div className="contents">
+        <Feed {...{ feed: feedDetail, feedType: FEED_TYPE.DETAIL }} />
+      </div>
       <div className="count">
         답변 <span>{replies.length}</span>
       </div>

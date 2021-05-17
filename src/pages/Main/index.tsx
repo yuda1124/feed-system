@@ -7,7 +7,7 @@ import './style.scss';
 const Main = () => {
   const [onEdit, setOnEdit] = useState<boolean>(false);
   const { feedState, changeFilter, fetchMore, changeOrder, feeds } = useFeedList();
-  const { feedSummaries, categories, advertisements, order, filter, lastPage, page } = feedState;
+  const { categories, order, filter, lastPage, page } = feedState;
   const onChangeOrder = (nextOrder: ORDER) => {
     if (order === nextOrder) return;
     changeOrder(nextOrder);
@@ -41,7 +41,7 @@ const Main = () => {
           필터
         </button>
       </div>
-      {feedSummaries.length > 0 && (
+      {feeds.length > 0 && (
         <InfinityScroll {...{ fetchMore, lastPage, page }}>
           <FeedList {...{ feeds }} />
         </InfinityScroll>

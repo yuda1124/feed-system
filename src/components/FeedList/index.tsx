@@ -1,6 +1,6 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { FeedSummary, Category, Advertisement, FEED_TYPE, TFeed } from '../../types';
+import { FEED_TYPE, TFeed } from '../../types';
 import { Feed } from '..';
 import './style.scss';
 
