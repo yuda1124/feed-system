@@ -15,6 +15,7 @@
     text-overflow: ellipsis;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: $line;
+    white-space: initial;
   }
 }
 
