@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ORDER, FeedSummary, Category, Advertisement } from '../types';
+import { ORDER, FeedSummary, Category, Advertisement, TFeed, FEED_TYPE } from '../types';
 import * as API from '../apis';
 
 type FeedState = {
@@ -57,6 +57,22 @@ const useFeedList = () => {
     init();
   }, []);
 
+  const reformatFeeds = () => {
+    const feeds: TFeed[] = [];
+    const { feedSummaries, advertisements, categories } = feedState;
+    let advIdx = 0;
+    feedSummaries.forEach((feed, idx) => {
+      if (idx > 0 && idx % 3 === 0 && advIdx < advertisements.length) {
+        const advertisement = advertisements[advIdx];
+        feeds.push({ ...advertisement, feedType: FEED_TYPE.ADVERTISEMENT } as Advertisement);
+        advIdx += 1;
+      }
+      const category = categories.find(c => c.id === feed.category_id);
+      feeds.push({ ...feed, category, feedType: FEED_TYPE.SUMMARY } as FeedSummary);
+    });
+    return feeds;
+  };
+
   const fetchAll = async ({
     page = feedState.page,
     limit = feedState.limit,
@@ -103,7 +119,7 @@ const useFeedList = () => {
     setFeedState({ ...feedState, order, page: 1, feedSummaries: feeds, advertisements: ads });
   };
 
-  return { feedState, changeFilter, fetchMore, changeOrder };
+  return { feedState, changeFilter, fetchMore, changeOrder, feeds: reformatFeeds() };
 };
 
 export { useFeedList };
