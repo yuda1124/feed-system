@@ -41,10 +41,12 @@ const initialFetch = async () => {
 
 const useFeedList = () => {
   const [feedState, setFeedState] = useState<FeedState>(initialState);
-
+  const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
     const init = async () => {
+      setLoading(true);
       const { categories, filter, feeds, ads, lastPage } = await initialFetch();
+      setLoading(false);
       setFeedState(state => ({
         ...state,
         categories,
@@ -89,10 +91,12 @@ const useFeedList = () => {
   };
 
   const changeFilter = async (filter: number[]) => {
+    setLoading(true);
     const { feeds, ads, lastPage } = await fetchAll({
       filter,
       page: 1,
     });
+    setLoading(false);
     setFeedState({
       ...feedState,
       lastPage,
@@ -115,11 +119,13 @@ const useFeedList = () => {
   };
 
   const changeOrder = async (order: ORDER) => {
+    setLoading(true);
     const { feeds, ads } = await fetchAll({ page: 1, order });
+    setLoading(false);
     setFeedState({ ...feedState, order, page: 1, feedSummaries: feeds, advertisements: ads });
   };
 
-  return { feedState, changeFilter, fetchMore, changeOrder, feeds: reformatFeeds() };
+  return { feedState, changeFilter, fetchMore, changeOrder, feeds: reformatFeeds(), loading };
 };
 
 export { useFeedList };

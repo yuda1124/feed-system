@@ -4,3 +4,4 @@ export * from './FeedList';
 export * from './EditFilter';
 export * from './AdvertisementFeed';
 export * from './InfinityScroll';
+export * from './Loading';

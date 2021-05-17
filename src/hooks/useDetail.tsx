@@ -4,9 +4,12 @@ import * as API from '../apis';
 
 const useDetail = (id: number) => {
   const [feedDetail, setFeedDetail] = useState<FeedDetail>();
+  const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
     const fetchFeedDetail = async () => {
+      setLoading(true);
       const { data: detail } = await API.getFeedDetail({ id });
+      setLoading(false);
       setFeedDetail({ ...detail, feedType: FEED_TYPE.DETAIL });
     };
     fetchFeedDetail();
@@ -17,7 +20,7 @@ const useDetail = (id: number) => {
     return reply.map(feed => ({ ...feed, feedType: FEED_TYPE.REPLY } as Reply));
   };
 
-  return { feedDetail, replies: reformatReplies() };
+  return { feedDetail, loading, replies: reformatReplies() };
 };
 
 export { useDetail };
