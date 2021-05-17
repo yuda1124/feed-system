@@ -25,10 +25,10 @@
   .wrap_contents {
     display: flex;
     width: 100%;
-    .created_at {
-      color: $light-gray;
-      font-size: $font-medium;
-    }
+  }
+  .created_at {
+    color: $light-gray;
+    font-size: $font-medium;
   }
   .img_adv {
     width: 100%;
@@ -44,6 +44,7 @@
       font-weight: $bold;
       margin-bottom: $space-medium;
       font-size: $font-large;
+      margin: $space-small 0;
     }
     p {
       @include ellipsis();
@@ -52,9 +53,6 @@
   }
   &.detail {
     border-color: $green;
-    .created_at {
-      margin-top: $space-medium;
-    }
   }
   &.advertisement,
   &.detail {
@@ -65,6 +63,24 @@
       p {
         @include ellipsis($line: 4);
       }
+    }
+  }
+  &.reply {
+    .content_feed {
+      title {
+        @include ellipsis();
+        border-bottom: 2px solid $border-color;
+        color: $light-gray;
+      }
+      p {
+        @include ellipsis($line: 4);
+      }
+    }
+  }
+  &.detail,
+  &.reply {
+    .created_at {
+      margin-top: $space-medium;
     }
   }
 }

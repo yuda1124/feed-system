@@ -25,10 +25,12 @@ const Feed = memo(({ feed }: FeedProps) => {
         </div>
       )}
       <div className="main_feed">
-        <div className="info_feed">
-          <span className="user_info">{userInfo}</span>
-          {feedType === FEED_TYPE.SUMMARY && <span className="created_at">{formatDate(created_at)}</span>}
-        </div>
+        {feedType !== FEED_TYPE.REPLY && (
+          <div className="info_feed">
+            <span className="user_info">{userInfo}</span>
+            {feedType === FEED_TYPE.SUMMARY && <span className="created_at">{formatDate(created_at)}</span>}
+          </div>
+        )}
         <div className="wrap_contents">
           {feed.feedType === FEED_TYPE.ADVERTISEMENT && (
             <img
@@ -42,7 +44,9 @@ const Feed = memo(({ feed }: FeedProps) => {
             <p>{contents}</p>
           </div>
         </div>
-        {feedType === FEED_TYPE.DETAIL && <p className="created_at">{formatDate(created_at)}</p>}
+        {(feedType === FEED_TYPE.DETAIL || feedType === FEED_TYPE.REPLY) && (
+          <p className="created_at">{formatDate(created_at)}</p>
+        )}
       </div>
     </div>
   );
