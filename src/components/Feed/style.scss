@@ -13,27 +13,57 @@
       flex: 1;
     }
   }
-  .main_feed {
-    .info_feed {
-      padding: $space-small 0;
-      .user_id {
-        color: $green;
-        padding-right: $space-small;
-        margin-right: $space-small;
-        border-right: 2px solid $border-color;
-      }
+  .info_feed {
+    padding: $space-small 0;
+  }
+  .user_info {
+    color: $green;
+    padding-right: $space-small;
+    margin-right: $space-small;
+    border-right: 2px solid $border-color;
+  }
+  .wrap_contents {
+    display: flex;
+    width: 100%;
+    .created_at {
+      color: $light-gray;
+      font-size: $font-medium;
     }
+  }
+  .img_adv {
+    width: 100%;
+    max-width: 150px;
+    height: auto;
+    margin-right: $space-medium;
+  }
+  .content_feed {
+    flex: 1;
+    min-width: 0;
+    title {
+      @include ellipsis();
+      font-weight: $bold;
+      margin-bottom: $space-medium;
+      font-size: $font-large;
+    }
+    p {
+      @include ellipsis();
+      font-size: $font-medium;
+    }
+  }
+  &.detail {
+    border-color: $green;
+    .created_at {
+      margin-top: $space-medium;
+    }
+  }
+  &.advertisement,
+  &.detail {
     .content_feed {
       title {
-        @include ellipsis();
-        font-weight: $bold;
-        display: block;
-        margin-bottom: $space-medium;
-        font-size: $font-large;
+        @include ellipsis($line: 2);
       }
       p {
-        @include ellipsis($line: 1);
-        font-size: $font-medium;
+        @include ellipsis($line: 4);
       }
     }
   }
