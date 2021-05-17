@@ -18,6 +18,29 @@ export type FeedSummary = {
   user_id: number;
 };
 
+export type User = {
+  created_at: string;
+  email: string;
+  email_verified_at: string;
+  id: number;
+  name: string;
+  updated_at: string;
+};
+
+export type Reply = {
+  contents: string;
+  created_at: string;
+  id: number;
+  parent: number;
+  updated_at: string;
+  user_id: number;
+};
+
+export type FeedDetail = FeedSummary & {
+  reply: Reply[];
+  user: User;
+};
+
 export type Advertisement = {
   contents: string;
   title: string;
@@ -37,6 +60,16 @@ export type FeedListParams = {
 export type AdvertisementListParams = {
   page: number;
   limit: number;
+};
+
+export type FeedDetailResponse = {
+  data: {
+    data: FeedDetail;
+  };
+};
+
+export type FeedDetailParams = {
+  id: number;
 };
 
 export type AdvertisementListResponse = {
