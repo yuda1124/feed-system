@@ -46,6 +46,11 @@ const EditFilter = ({ categories, filter, changeFilter, closePopup }: EditFilter
   return (
     <>
       <div className="wrap_edit_filter">
+        <div className="header">
+          <button type="button" onClick={() => closePopup()}>
+            X
+          </button>
+        </div>
         <h4>필터</h4>
         <ul>{renderCategories()}</ul>
         <div>

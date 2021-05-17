@@ -6,10 +6,18 @@
     min-width: 80%;
     top: 40%;
   }
+  .header {
+    button {
+      background-color: transparent;
+      color: #000;
+      padding: $space-small $space-medium;
+      font-size: $font-large;
+    }
+  }
   min-width: 350px;
   background-color: #fff;
   z-index: 1000;
-  padding: $space-x-large;
+  padding: $space-small $space-medium $space-x-large $space-x-large;
   box-sizing: border-box;
   ul {
     margin: $space-medium 0;
