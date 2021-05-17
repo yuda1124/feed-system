@@ -5,6 +5,8 @@ import {
   FeedListResponse,
   AdvertisementListParams,
   AdvertisementListResponse,
+  FeedDetailParams,
+  FeedDetailResponse,
 } from '../types';
 
 const serializeParameter = (obj: { [key: string]: any }) => {
@@ -37,6 +39,12 @@ export const getFeedList = async ({ page, ord, category, limit }: FeedListParams
 
 export const getAdvertisementList = async ({ page, limit }: AdvertisementListParams) => {
   const response: AdvertisementListResponse = await endpoint.get(`/ads?${serializeParameter({ page, limit })}`);
+  const { data } = response;
+  return data;
+};
+
+export const getFeedDetail = async ({ id }: FeedDetailParams) => {
+  const response: FeedDetailResponse = await endpoint.get(`/view?${serializeParameter({ id })}`);
   const { data } = response;
   return data;
 };
