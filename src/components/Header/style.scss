@@ -6,6 +6,17 @@ header {
   box-shadow: $shadow;
   width: 100%;
   margin-bottom: $space-large;
+  position: relative;
+  button {
+    position: absolute;
+    padding: 0 $space-large;
+    left: 0;
+    top: $space-small;
+    bottom: $space-small;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: $font-large;
+  }
   span {
     font-size: $font-x-large;
     line-height: $header-height;
