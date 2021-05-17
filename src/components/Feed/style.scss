@@ -25,6 +25,9 @@
   .wrap_contents {
     display: flex;
     width: 100%;
+    @include smaller-than($tablet-mobile-width) {
+      flex-direction: column;
+    }
   }
   .created_at {
     color: $light-gray;
@@ -35,6 +38,9 @@
     max-width: 150px;
     height: auto;
     margin-right: $space-medium;
+    @include smaller-than($tablet-mobile-width) {
+      max-width: unset;
+    }
   }
   .content_feed {
     flex: 1;
