@@ -9,6 +9,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    display: block;
   } @else {
     display: -webkit-box;
     overflow: hidden;
