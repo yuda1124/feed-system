@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, ReactNode, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FeedSummary, Category, Advertisement } from '../../types';
 import { Feed, AdvertisementFeed } from '..';
 import './style.scss';
@@ -24,7 +25,11 @@ const FeedList = ({ feedSummaries, categories, fetchMore, lastPage, page, advert
         feeds.push(<AdvertisementFeed advertisement={advertisement} key={`adv_${id}`} />);
         advIdx += 1;
       }
-      feeds.push(<Feed {...{ feed, categories }} key={`feed_${feed.id}`} />);
+      feeds.push(
+        <Link className="link_feed" to={location => `${location.pathname}${feed.id}`} key={`feed_${feed.id}`}>
+          <Feed {...{ feed, categories }} />
+        </Link>,
+      );
     });
     return feeds;
   };
