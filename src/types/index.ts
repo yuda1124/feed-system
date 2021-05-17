@@ -3,19 +3,16 @@ export enum ORDER {
   DESC = 'desc',
 }
 
+export enum FEED_TYPE {
+  SUMMARY = 'summary',
+  REPLY = 'reply',
+  DETAIL = 'detail',
+  ADVERTISEMENT = 'advertisement',
+}
+
 export type Category = {
   id: number;
   name: string;
-};
-
-export type FeedSummary = {
-  category_id: number;
-  contents: string;
-  created_at: string;
-  id: number;
-  title: string;
-  updated_at: string;
-  user_id: number;
 };
 
 export type User = {
@@ -27,21 +24,37 @@ export type User = {
   updated_at: string;
 };
 
+export type FeedSummary = {
+  feedType: FEED_TYPE.SUMMARY;
+  category_id: number;
+  contents: string;
+  created_at: string;
+  id: number;
+  title: string;
+  updated_at: string;
+  user_id: number;
+  user: User;
+};
+
 export type Reply = {
+  feedType: FEED_TYPE.REPLY;
   contents: string;
   created_at: string;
   id: number;
   parent: number;
   updated_at: string;
   user_id: number;
+  user: User;
 };
 
-export type FeedDetail = FeedSummary & {
+export type FeedDetail = Omit<FeedSummary, 'feedType'> & {
+  feedType: FEED_TYPE.DETAIL;
   reply: Reply[];
   user: User;
 };
 
 export type Advertisement = {
+  feedType: FEED_TYPE.ADVERTISEMENT;
   contents: string;
   title: string;
   created_at: string;
@@ -103,3 +116,5 @@ export type MainState = {
   categories: Category[];
   lastPage: number;
 };
+
+export type TFeed = (Advertisement | FeedDetail | FeedSummary | Reply) & { category?: Category };
